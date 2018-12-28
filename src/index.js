@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
+import config from './Config';
+import firebase from 'firebase/app';
 import * as serviceWorker from './serviceWorker';
+
+firebase.initializeApp(config);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
