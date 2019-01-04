@@ -42,7 +42,7 @@ export default class SplitterTable extends Component {
                         }
                         return (
                             <Col key={"name" + i}>
-                                <h1>{user.name}</h1>
+                                <h1 className="text-lowercase">{user.name}</h1>
                                 <h3><span className={textColor}>{costString}</span></h3>
                                 <ListGroup>
                                     {items.length === 0 ? <ListGroupItem>None</ListGroupItem> : this.cleanItems(items)}

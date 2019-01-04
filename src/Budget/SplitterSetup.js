@@ -77,28 +77,34 @@ class SplitterSetup extends Component {
                 }
             });
         } else {
-            splitter.where("name", "==", splitterName).get().then((results) => {
-                if (!results.empty) {
-                    this.setState({
-                        error: "Splitter already exists!"
-                    });
-                } else {
-                    splitter.add({
-                        password: this.state.password,
-                        name: splitterName
-                    }).then((doc) => {
-                        splitter.doc(doc.id).collection("users").doc(userId).set({
-                            items: [],
-                            id: userId,
-                            name: displayName
-                        });
+            if (this.state.password !== "") {
+                splitter.where("name", "==", splitterName).get().then((results) => {
+                    if (!results.empty) {
                         this.setState({
-                            splitterName: splitterName,
-                            splitterId: doc.id
+                            error: "Splitter already exists!"
                         });
-                    });
-                }
-            });
+                    } else {
+                        splitter.add({
+                            password: this.state.password,
+                            name: splitterName
+                        }).then((doc) => {
+                            splitter.doc(doc.id).collection("users").doc(userId).set({
+                                items: [],
+                                id: userId,
+                                name: displayName
+                            });
+                            this.setState({
+                                splitterName: splitterName,
+                                splitterId: doc.id
+                            });
+                        });
+                    }
+                });
+            } else {
+                this.setState({
+                    error: "Password must not be blank!"
+                });
+            }
         }
     }
 

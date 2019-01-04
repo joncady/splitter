@@ -38,7 +38,7 @@ export default class Splitter extends Component {
     }
 
     removeItem = (item) => {
-        this.splitter.doc(this.props.id).update({
+        this.splitter.doc(firebase.auth().currentUser.uid).update({
             items: firebase.firestore.FieldValue.arrayRemove(item)
         });
     }
@@ -73,7 +73,7 @@ export default class Splitter extends Component {
         let splitter = firebase.firestore().collection("splitters");
         const cost = this.state.cost;
         const item = this.state.item;
-        if (cost !== 0 && item !== "") {
+        if (cost > 0 && item !== "") {
             splitter.doc(this.props.id).collection("users").doc(firebase.auth().currentUser.uid).update({
                 items: firebase.firestore.FieldValue.arrayUnion({ cost: Number(cost), item: item })
             }).then(() => {
