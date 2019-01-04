@@ -4,15 +4,15 @@ self.__precacheManifest = [
     "url": "/splitter/static/js/runtime~main.09da4b08.js"
   },
   {
-    "revision": "53e3c8f944bc2d28d404",
-    "url": "/splitter/static/js/main.53e3c8f9.chunk.js"
+    "revision": "a491c2ae152c1a710dab",
+    "url": "/splitter/static/js/main.a491c2ae.chunk.js"
   },
   {
     "revision": "eb51dabac393a6253acf",
     "url": "/splitter/static/js/1.eb51daba.chunk.js"
   },
   {
-    "revision": "53e3c8f944bc2d28d404",
+    "revision": "a491c2ae152c1a710dab",
     "url": "/splitter/static/css/main.2624bec9.chunk.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/splitter/static/css/1.34187ac0.chunk.css"
   },
   {
-    "revision": "8a75c887678572dfac1dca67e78bcd42",
+    "revision": "a3e4f9fd70c338d9859ecce4429ae03f",
     "url": "/splitter/index.html"
   }
 ];
