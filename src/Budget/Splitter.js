@@ -18,8 +18,8 @@ export default class Splitter extends Component {
     }
 
     componentDidMount() {
-        let db = firebase.firestore();
-        this.splitter = db.collection("splitters").doc(this.props.id).collection("users")
+        this.db = this.props.firestore;
+        this.splitter = this.db.collection("splitters").doc(this.props.id).collection("users")
         this.unsubscribe = this.splitter
             .onSnapshot((results) => {
                 let users = [];

@@ -12,6 +12,15 @@ h1, h3, .to-font {
 	font-family: 'Major Mono Display', monospace;
 }
 
+#current-splitters {
+	text-align: center;
+	padding: 1rem;
+}
+
+#current-splitters button {
+	margin: 1rem;
+}
+
 #splitter-area {
 	margin: 3rem auto;
 	width: 90%;
@@ -30,8 +39,8 @@ h1, h3, .to-font {
 }
 
 @media (min-width: 600px) {
-	#about, #splitter-setup {
-		margin: 4rem auto;
+	#about, #splitter-setup, #current-splitters {
+		margin: 2rem auto;
 		width: 40%;
 	}
 }

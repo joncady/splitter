@@ -18,8 +18,38 @@ class SplitterSetup extends Component {
             joinOrCreate: true,
             titleText: "Join",
             error: null,
-            splitterName: null
+            splitterName: null,
+            currentSplitters: []
         }
+    }
+
+    componentDidMount() {
+        let uid = firebase.auth().currentUser.uid;
+        let userSplitters = [];
+        this.db = firebase.firestore();
+        this.db.settings({
+            timestampsInSnapshots: true
+        });
+        let splitters = this.db.collection("splitters");
+        splitters.get().then((snapshot) => {
+            let docs = snapshot.docs;
+            docs.forEach((doc) => {
+                let name = (doc.data()).name;
+                let id = doc.id;
+                let docPath = splitters.doc(doc.id).collection("users").doc(uid);
+                docPath.get().then((docSnapshot) => {
+                    if (docSnapshot.exists) {
+                        this.setState({
+                            currentSplitters: this.state.currentSplitters.concat({ id: id, name: name })
+                        })
+                    }
+
+                });
+            });
+            this.setState({
+                currentSplitters: userSplitters
+            });
+        })
     }
 
     checkPassword(pass) {
@@ -44,11 +74,7 @@ class SplitterSetup extends Component {
 
     doAction = () => {
         const splitterName = this.state.splitter;
-        let db = firebase.firestore();
-        db.settings({
-            timestampsInSnapshots: true
-        });
-        let splitter = db.collection('splitters');
+        let splitter = this.db.collection('splitters');
         let userId = firebase.auth().currentUser.uid;
         let displayName = firebase.auth().currentUser.displayName;
         if (this.state.joinOrCreate) {
@@ -132,8 +158,22 @@ class SplitterSetup extends Component {
                     <Button color="danger" onClick={() => firebase.auth().signOut()}>Log Out</Button>
                 </Navbar>
                 {this.state.splitterName ?
-                    <Splitter name={this.state.splitterName} id={this.state.splitterId} reset={this.reset}></Splitter> :
+                    <Splitter name={this.state.splitterName} id={this.state.splitterId} firestore={this.db} reset={this.reset}></Splitter> :
                     <React.Fragment>
+                        <div className="border" id="current-splitters">
+                            <div>
+                                <h3>current splitters</h3>
+                            </div>
+                            <div>
+                                {this.state.currentSplitters &&
+                                    <div>
+                                        {this.state.currentSplitters.map((splitter) => {
+                                            return <Button key={splitter.name} onClick={() => this.setState({ splitterId: splitter.id, splitterName: splitter.name })}>{splitter.name}</Button>
+                                        })}
+                                    </div>
+                                }
+                            </div>
+                        </div>
                         <Form id="splitter-setup" className="border" onSubmit={(e) => {
                             e.preventDefault();
                             this.doAction();
