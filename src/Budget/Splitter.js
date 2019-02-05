@@ -9,6 +9,7 @@ export default class Splitter extends Component {
 
     constructor() {
         super();
+        this.textInput = React.createRef();
         this.state = {
             item: "",
             cost: 0,
@@ -77,6 +78,7 @@ export default class Splitter extends Component {
             splitter.doc(this.props.id).collection("users").doc(firebase.auth().currentUser.uid).update({
                 items: firebase.firestore.FieldValue.arrayUnion({ cost: Number(cost), item: item })
             }).then(() => {
+                this.textInput.current.focus();
                 this.setState({
                     cost: 0,
                     item: ""
@@ -106,7 +108,7 @@ export default class Splitter extends Component {
                         <h3>add an item</h3>
                         <FormGroup>
                             <Label for="item">Name of Item</Label>
-                            <Input value={this.state.item} onChange={(event) => this.updateValue("item", event.target.value)} placeholder="Add an item!"></Input>
+                            <Input value={this.state.item} innerRef={this.textInput} onChange={(event) => this.updateValue("item", event.target.value)} placeholder="Add an item!"></Input>
                         </FormGroup>
                         <FormGroup>
                             <Label for="cost">Cost</Label>
